@@ -1,4 +1,5 @@
 import React from 'react';
+import propTypes from 'prop-types';
 
 import { Container, Repository } from './styles';
 
@@ -26,7 +27,7 @@ const CompareList = ({ repositories }) => (
             <small>issues</small>
           </li>
           <li>
-            {repository.pushed_at}
+            {repository.lastCommit}
             <small>last commit</small>
           </li>
         </ul>
@@ -34,5 +35,20 @@ const CompareList = ({ repositories }) => (
     ))}
   </Container>
 );
+
+CompareList.propTypes = {
+  repositories: propTypes.arrayOf(propTypes.shape({
+    id: propTypes.number,
+    name: propTypes.string,
+    owner: propTypes.shape({
+      login: propTypes.string,
+      avatar_url: propTypes.string,
+    }),
+    stargazers_count: propTypes.number,
+    forks_count: propTypes.number,
+    open_issues_count: propTypes.number,
+    pushed_at: propTypes.string,
+  })).isRequired,
+}
 
 export default CompareList;
